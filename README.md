@@ -6,6 +6,8 @@ Apparently, these are all of hard difficulty (for people who've done simple proj
 
 These include:
 
+- **Contacts:** Phone book with full support of OO principles
+- **Music Advisor:** TODO: description
 - **JSON-XML Converter:** Program to convert formats (may try to add YAML)
 - **Maze Runner:** Program generates mazes and finds a way through them
 - **Simple Search Engine:** Search for text data represented as lines
