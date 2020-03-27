@@ -13,7 +13,10 @@ public enum ItemType {
         this.type = type;
     }
 
-    @Override
+    /** String representation of enum
+    *
+    * @return String representation of ItemType
+    */
     public String toString() {
         return this.type;
     }
