@@ -4,9 +4,24 @@ import banking.*;
 
 public class Runner {
     public static void main(String[] args) {
+        if (args.length != 2 || !args[0].equals("-fileName")) {
+            System.out.println("Usage: java Runner -fileName file_name");
+            System.exit(1);
+        }
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        BackendService bes = BackendService.initConnection(args[1]);
+        if (bes == null) {
+            System.out.println("Failure to establish connection to DB");
+            System.exit(1);
+        }
+
         boolean isRunningProgram = true;
         Scanner in = new Scanner(System.in);
-        Bank b = new Bank(400000);
+        Bank b = new Bank(400000, bes);
 
         while (isRunningProgram) {
             try {
@@ -20,7 +35,7 @@ public class Runner {
                         System.out.println("Your card number:");
                         System.out.println(newAcct.getCardNumber());
                         System.out.println("Your card PIN");
-                        System.out.printf("%04d\n", newAcct.getPin());
+                        System.out.println(newAcct.getPin());
                         break;
                     case 2:
                         System.out.println("Enter your card number:");
@@ -49,10 +64,11 @@ public class Runner {
             } catch (NumberFormatException e) {
                 System.out.println("Please enter valid input.");
             }
-            System.out.println();
+            if (isRunningProgram) System.out.println();
         }
 
         System.out.println("Bye!");
+        bes.closeConnection();
     }
 
     private static boolean accessAccount(Account acct, Scanner in) {
@@ -82,7 +98,7 @@ public class Runner {
             } catch (NumberFormatException e) {
                 System.out.println("Please enter valid input.");
             }
-            System.out.println();
+            if (isRunningProgram) System.out.println();
         }
 
         return hasResolution;

@@ -1,27 +1,22 @@
 package banking;
 
 public class Account {
-    private final int BankIdentifier;
-    private final long accountNumber;
-    private int PIN;
-    private final int checkSum;
+    private String account, pin;
     private long balance;
 
-    public Account(int bi, long acct, long checkSum) {
-        this.BankIdentifier = bi;
-        this.accountNumber = acct;
-        this.PIN = (int) (Math.random() * 10000);
-        this.checkSum = (int) checkSum;
-        this.balance = 0;
 
+    public Account (String acct, String pin) {
+        this.account = acct;
+        this.pin = pin;
+        this.balance = 0;
     }
 
     public String getCardNumber() {
-        return this.BankIdentifier + "" + String.format("%09d", this.accountNumber) + this.checkSum;
+        return this.account;
     }
 
-    public long getPin() {
-        return this.PIN;
+    public String getPin() {
+        return this.pin;
     }
 
     public long getBalance() {
@@ -44,8 +39,8 @@ public class Account {
         return balance;
     }
 
-    public boolean setPin(int old, int newPin) {
-        if (old == this.PIN) this.PIN = newPin;
+    public boolean setPin(String old, String newPin) {
+        if (old.equals(this.pin)) this.pin = newPin;
         else return false;
         return true;
     }
