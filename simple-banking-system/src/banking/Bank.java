@@ -66,4 +66,31 @@ public class Bank {
         }
         return null;
     }
+
+    public boolean addFunds(Account acct, long income) {
+        if (b.updateFundsToAccount(acct.getCardNumber(), income)) {
+            acct.deposit(income);
+            return true;
+        }
+        return false;
+    }
+
+    public int checkCardForTransfer(Account acct, String card) {
+        if (card.equals(acct.getCardNumber())) return 1;
+        else if (!checkLuhnsAlgo(Long.parseLong(card))) return 2;
+        else if (b.findAccount(card, null) == -1) return 3;
+        else return 0;
+    }
+
+    public boolean transferFunds(Account acct, String card, long transfer) {
+        if (b.transferFunds(acct.getCardNumber(), card, transfer)) {
+            acct.withdraw(transfer);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean closeAccount(Account acct) {
+        return b.deleteAccount(acct.getCardNumber(), acct.getPin());
+    }
 }

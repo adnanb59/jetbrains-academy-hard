@@ -50,7 +50,7 @@ public class Runner {
                         }
                         if (acct != null) {
                             System.out.println("\nYou have successfully logged in!");
-                            if (!accessAccount(acct, in)) isRunningProgram = false;
+                            if (!accessAccount(acct, b, in)) isRunningProgram = false;
                         }
                         else System.out.println("\nWrong card number or PIN!");
                         break;
@@ -71,11 +71,11 @@ public class Runner {
         bes.closeConnection();
     }
 
-    private static boolean accessAccount(Account acct, Scanner in) {
+    private static boolean accessAccount(Account acct, Bank b, Scanner in) {
         boolean isRunningProgram = true;
         boolean hasResolution = false;
         while (isRunningProgram) {
-            System.out.println("1. Balance\n2. Log out\n0. Exit");
+            System.out.println("1. Balance\n2. Add income\n3. Do Transfer\n4. Close account\n5. Log out\n0. Exit");
             try {
                 int option = Integer.parseInt(in.nextLine().trim());
                 System.out.println();
@@ -84,6 +84,35 @@ public class Runner {
                         System.out.println("Balance: " + acct.getBalance());
                         break;
                     case 2:
+                        System.out.println("Enter income:");
+                        long income = Long.parseLong(in.nextLine().trim());
+                        System.out.println("Income was" + (b.addFunds(acct, income) ? "" : " not") + " added!");
+                        break;
+                    case 3:
+                        System.out.println("Transfer");
+                        System.out.println("Enter card number:");
+                        String card = in.nextLine().trim();
+                        int check_card = b.checkCardForTransfer(acct, card);
+                        if (check_card == 1) System.out.println("You can't transfer money to the same account!");
+                        else if (check_card == 2) System.out.println("Probably you made mistake in the card number. Please try again!");
+                        else if (check_card == 3) System.out.println("Such a card does not exist.");
+                        else {
+                            System.out.println("Enter how much money you want to transfer:");
+                            long transfer = Long.parseLong(in.nextLine().trim());
+                            if (transfer > acct.getBalance()) System.out.println("Not enough money!");
+                            else if (b.transferFunds(acct, card, transfer)) System.out.println("Success!");
+                            else System.out.println("Failure!");
+                        }
+                        break;
+                    case 4:
+                        if (b.closeAccount(acct)) {
+                            System.out.println("This account has been closed");
+                            acct = null;
+                            isRunningProgram = false;
+                            hasResolution = true;
+                        } else System.out.println("This account has not been closed");
+                        break;
+                    case 5:
                         isRunningProgram = false;
                         hasResolution = true;
                         System.out.print("You have successfully logged out!");

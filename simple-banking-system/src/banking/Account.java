@@ -38,10 +38,4 @@ public class Account {
         balance += amount;
         return balance;
     }
-
-    public boolean setPin(String old, String newPin) {
-        if (old.equals(this.pin)) this.pin = newPin;
-        else return false;
-        return true;
-    }
 }
