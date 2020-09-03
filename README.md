@@ -6,13 +6,15 @@ Apparently, these are all of hard difficulty (for people who've done simple proj
 
 These include:
 
-- **Contacts:** Phone book with full support of OO principles
-- **Music Advisor:** TODO: description
-- **JSON-XML Converter:** Program to convert formats (may try to add YAML)
-- **Maze Runner:** Program generates mazes and finds a way through them
-- **Minesweeper:** Minesweeper
-- **Game of Life:** Game of Life
-- **Budget Manager:** Budget Manager
-- **Error Correcting Encoder-Decoder:** Writing an encoder that will allow for reliable data transfer
-- **Numeric Matrix Processor:** Operations on matrices
-- **Tic-Tac-Toe with AI:** Create an AI to play Tic-Tac-Toe with
+- **Budget Manager**: Simple tool to help manage your budget and purchases
+- **Digit Recognition**: 
+- **Flashcards**: Application allowing you to create flashcards to help with revision
+- **Linear Equations Solver**: Solve systems of linear equations (including those with complex coefficients)
+- **Maze Runner**: 
+- **Minesweeper**: (moved to medium)
+- **Music Advisor**: 
+- **Phone Book**: 
+- **Simple Banking System**: Simulate a simple bank, allowing users to create accounts and deposit, transfer, withdraw funds 
+- **Simple Search Engine**: Create a tool to search through a collection of names and emails
+- **Smart Calculator**: Create a calculator interface to evaluate expressions, including those using variables
+- **Sorting Tool**: Tool to sort words or numbers by their respective orders or by the frequency that they appear
