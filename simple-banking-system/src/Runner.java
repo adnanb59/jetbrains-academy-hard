@@ -3,16 +3,21 @@ import java.util.Scanner;
 import banking.*;
 
 public class Runner {
+    // MAIN METHOD
     public static void main(String[] args) {
         if (args.length != 2 || !args[0].equals("-fileName")) {
             System.out.println("Usage: java Runner -fileName file_name");
             System.exit(1);
         }
+
+        // For MySQL JDBC to work properly
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        // Set up DB connection for persistence
         BackendService bes = BackendService.initConnection(args[1]);
         if (bes == null) {
             System.out.println("Failure to establish connection to DB");
@@ -71,6 +76,14 @@ public class Runner {
         bes.closeConnection();
     }
 
+    /**
+    * Public method where logged in user can access their account and do transactions.
+    * 
+    * @param acct - Account of user logged in
+    * @param b - The Bank
+    * @param in - Scanner for user input
+    * @return Status of user exit (log out or straight exit)
+    */
     private static boolean accessAccount(Account acct, Bank b, Scanner in) {
         boolean isRunningProgram = true;
         boolean hasResolution = false;
