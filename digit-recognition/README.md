@@ -1,3 +1,5 @@
 ## digit-recognition (ON HOLD)
 
-https://hyperskill.org/projects/51?goal=7
+This program uses AI to recognize different variations of numbers based on a provided format.
+
+##### URL: https://hyperskill.org/projects/51
