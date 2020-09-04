@@ -8,6 +8,8 @@ Therefore, once you exit the program and run it again, you can use credentials c
 
 You could say that the simplicity of this banking system comes with the operations that can be done by a user. However, it's important to point out that the program is simple as well in terms of security. All data stored in the DB is stored as-is, no encryption/decryption.
 
+The bank has a hard coded institution identification number (IIN) of 400000 (which can be verified on account creation, as all accounts start with it). This can be modified in the code, or you can add it as a command line argument, therefore allowing for more banks and various accounts. Account numbers are 16 digits, however the digits after the IIN aren't exactly any random numbers. The 9 numbers after (can refer to it as the core account number) are random, however the whole account number passes [Luhn's algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm), therefore the last digit is a check digit.
+
 #### Running program
 This program contains a persistence layer where bank updates are stored in a DB. This program is set up to run with MySQL (but can be easily
 modified to work with SQLite).
