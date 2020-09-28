@@ -212,6 +212,8 @@ public class Game {
                 if (i == 0 || i == size+1) sb.append("-");
                 else {
                     // Everything outside of this is formatting, this is the board
+                    // Think of the game board as numbers as a grid from 1 to N*N (with N rows of N columns of #'s)
+                    // This is a way of mapping the row and column to a specific number
                     int position = (i-1)*size + (j+1);
                     // What to print:
                     //  - Board value if it's been checked (or is a mine and one has been hit)
