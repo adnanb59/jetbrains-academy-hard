@@ -17,7 +17,7 @@ After compiling the program (using `javac Runner.java`), run program with: `java
 
 You will then be prompted to enter the size of the square grid as follows:
 
-`How large do you want the grid? (NxN cells, enter one number): ` 
+`How large do you want the grid? (NxN cells, enter one number):` 
 
 Being a square grid, only one number should be entered, furthermore it must be greater than 0.
 
@@ -25,7 +25,7 @@ After entering the size of the grid, you will be asked to enter how many mines y
 
 The prompt: 
 
-`How many mines do you want on the field? `
+`How many mines do you want on the field?`
 
 Again, only one positive (greater than 0) number is required, however the maximum number of mines you can have on the field is `N*N - 1`. This may just be *MY* rule, but there should be at least one empty cell to free on the board during the first turn.
 
