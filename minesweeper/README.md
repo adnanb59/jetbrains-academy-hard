@@ -58,7 +58,7 @@ This program uses an enum for the various pieces on the Minesweeper board. Curre
 - `X`: Mine
 - `.`: Unread
 - `1`-`9`- Counters
-Therefore, if you want to use different values, you can change them [here](minesweeper/src/minesweeper/Piece.java).
+Therefore, if you want to use different values, you can change them [here](src/minesweeper/Piece.java).
 
 > DESIGN DECISION
 
