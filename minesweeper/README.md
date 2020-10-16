@@ -7,11 +7,9 @@ The aim of the game is to avoid the mines placed on the board as you explore it'
 In order to complete your task, you are able to free cells to gain information about the board. Empty cells don't tell you much (except that you're safe for now) but with the numbered cells, you can determine how many mines may be around.
 
 As with the standard Minesweeper, if an empty cell is freed then adjacent empty cells are freed.
-
 Once you have an estimation of the location of a mine, you can flag it.
 
 You lose if you free a cell with a mine (it might be obvious but I felt I should lay everything out).
-
 You win if you can either flag all the cells with mines (and only those cells, extra flags need to be removed). Additionally, there is another way to win where you are able to free every cell that doesn't contain a mine. In a sense, it is another way to detect mines. So if you have no cells flagged and all the non-mine cells freed, you win.
 
 #### Running Program
@@ -19,7 +17,7 @@ After compiling the program (using `javac Runner.java`), run program with: `java
 
 You will then be prompted to enter the size of the square grid as follows:
 
-`How large do you want the grid? (NxN cells, enter one number): ` 
+`How large do you want the grid? (NxN cells, enter one number):` 
 
 Being a square grid, only one number should be entered, furthermore it must be greater than 0.
 
@@ -27,7 +25,7 @@ After entering the size of the grid, you will be asked to enter how many mines y
 
 The prompt: 
 
-`How many mines do you want on the field? `
+`How many mines do you want on the field?`
 
 Again, only one positive (greater than 0) number is required, however the maximum number of mines you can have on the field is `N*N - 1`. This may just be *MY* rule, but there should be at least one empty cell to free on the board during the first turn.
 
@@ -56,11 +54,11 @@ The board that the user sees looks like this (a 3x3 board with unread cells):
 > ENUMS
 
 This program uses an enum for the various pieces on the Minesweeper board. Currently it's set to:
-    - `*`- Flagged cell
-    - `X`- Mine
-    - `.`- Unread
-    - `1`-`9`- Counters
-Therefore, if you want to use different values, you can change them [here]().
+- `*`: Flagged cell
+- `X`: Mine
+- `.`: Unread
+- `1`-`9`- Counters
+Therefore, if you want to use different values, you can change them [here](src/minesweeper/Piece.java).
 
 > DESIGN DECISION
 
