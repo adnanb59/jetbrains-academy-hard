@@ -8,4 +8,18 @@ Users can't solve mazes interactively with the program but this program is neat 
 
 On top of just simply creating mazes, you can also export them to a text file and load them later (to view the maze and/or it's solution).
 
+### Running Program
+
+After compiling program using `javac src/Runner.java`, run program with `java src/Runner`.
+
+Once the program starts, the user will be prompted with a menu with options to initialize a maze.
+
+### Extra Notes
+
+> Graph Algorithms
+
+> Maze Structure
+
+> Maze Design
+
 ##### URL: https://hyperskill.org/projects/47
