@@ -30,6 +30,13 @@ Once a maze is initialized, more options will be presented to the user. These wi
 
 > Graph Algorithms
 
+This program uses a modified Prim's algorithm to create the maze.
+Choosing a vertex as well as a neighbour to connect to is random, so if you try to connect with the graph analogy, you should consider edges to be unweighted.
+I was having trouble with making the logic work with the implementation, [this](https://stackoverflow.com/a/29758926) link helped me fix those issues (using every other element vs. the adjacent element)
+
+This program uses a bidirectional Breadth-First Search to find the escape route of the maze.
+Because its easy to determine the entrance and exit (mentioned later), the algorithm searches until there is an intersection is found (the first element that was visited by both directions of the BFS). Once found, the algorithm traces back through the parent elements visited until it reaches the entrance & exit, adding the elements to a set containing the escape path positions.
+
 > Maze Structure
 
 As you can see [here](maze-runner/src/maze/MazeGenerator.java), the maze is not a 2D-array but the final structure is influenced by one. It is a set consisting of positions on the maze containing free spaces (the path). These positions are akin to indices in a 2D-array except rather than being coordinates, they are values between `[0, N^2 - 1]; N = maze length`. Because the maze really consists of two values: a free space or a block/wall, there is no need to keep track of both pieces of information because one existing in a data structure implies that it doesn't exist in the other (if there was another). Meaning, if the value exists in the path set, it is implied that it is not part of the wall.
