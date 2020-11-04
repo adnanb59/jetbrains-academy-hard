@@ -10,8 +10,8 @@ These include:
 - **Digit Recognition**: 
 - **Flashcards**: Application allowing you to create flashcards to help with revision
 - **Linear Equations Solver**: Solve systems of linear equations (including those with complex coefficients)
-- **Maze Runner**: 
-- **Minesweeper**: (moved to medium)
+- **Maze Runner**: Create mazes using graph algorithms
+- **Minesweeper**: Minesweeper game
 - **Music Advisor**: 
 - **Phone Book**: 
 - **Simple Banking System**: Simulate a simple bank, allowing users to create accounts and deposit, transfer, withdraw funds 
