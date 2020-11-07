@@ -1,12 +1,12 @@
+package advisor;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Scanner;
 import java.util.Properties;
+import java.util.Scanner;
 
-import advisor.*;
-
-public class Runner {
+public class Main {
     public static void main(String[] args) {
         if (args.length > 4 || args.length % 2 == 1) {
             System.out.println("USAGE: java Runner [-access url] [-resource url]");
@@ -41,7 +41,7 @@ public class Runner {
         }
 
         Properties p = new Properties();
-        try (InputStream is = new FileInputStream("../music_advisor.properties")) {
+        try (InputStream is = new FileInputStream("../../util/music_advisor.properties")) {
             p.load(is);
             if (p.getProperty("client_id") == null || p.getProperty("client_secret") == null) {
                 throw new IOException();
@@ -93,7 +93,7 @@ public class Runner {
                     } else {
                         command = command.replaceFirst("^(playlists)\\s+", "").toUpperCase();
                         System.out.println("---" + command + " PLAYLISTS---");
-                        System.out.println(api.getPlaylists(command));
+                        System.out.println(api.getCategoryPlaylists(command));
                     }
             }
         }
