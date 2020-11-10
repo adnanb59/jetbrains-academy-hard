@@ -1,5 +1,6 @@
 package advisor;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -24,7 +25,6 @@ public class ConnectionService {
     private HttpServer server;
     private JsonObject access_tokens;
     private HttpClient cli;
-    private JsonObject cached_categories;
     private int server_port;
 
     public ConnectionService(String access, String resource, Properties p) {
@@ -33,8 +33,7 @@ public class ConnectionService {
         props = p;
         access_code = null;
         access_tokens = null;
-        cached_categories = null;
-        server_port = (new Random()).nextInt(6000) + 8000;
+        server_port = (new Random()).nextInt(6000) + 4000;
         cli = HttpClient.newBuilder().build();
         create_authorize_server();
     }
@@ -50,8 +49,6 @@ public class ConnectionService {
                 @Override
                 public void handle(HttpExchange ex) throws IOException {
                     String query = ex.getRequestURI().getQuery();
-                    //System.out.println(ex.getRequestURI().getQuery());
-                    //System.out.println(ex.getRequestURI().toString());
                     if (query != null && query.contains("code=")) {
                         t.access_code = query.split("[&=]")[1];
                         ex.sendResponseHeaders(200, success.length());
@@ -79,15 +76,16 @@ public class ConnectionService {
 
         try {
             HttpResponse<String> resp = cli.send(req, HttpResponse.BodyHandlers.ofString());
+            JsonObject ret = JsonParser.parseString(resp.body()).getAsJsonObject();
+            //System.out.println(resp.body());
             return JsonParser.parseString(resp.body()).getAsJsonObject();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            return null;
+            return JsonParser.parseString("{\"error\": {\"message\": \"Error connecting to server.\"}}").getAsJsonObject();
         }
     }
 
     private void refreshTokens() {
-        //access_tokens.addProp
         HttpRequest req =  HttpRequest.newBuilder()
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .header("Authorization", Base64.getEncoder().encodeToString((props.getProperty("client_id") + ":" + props.getProperty("client_secret")).getBytes()))
@@ -107,39 +105,54 @@ public class ConnectionService {
         return access_code != null;
     }
 
-    public JsonObject getNewReleases() {
-        return get("/new-releases");
+    public JsonObject getNewReleases(int page, int limit) {
+        JsonObject ret = get("/new-releases?limit=" + limit + "&offset=" + (page*limit));
+        // TODO: remove
+        ret.getAsJsonObject("albums").addProperty("offset", page*limit);
+        return ret;
     }
 
-    public JsonObject getFeaturedPlaylists() {
-        return get("/featured-playlists");
+    public JsonObject getFeaturedPlaylists(int page, int limit) {
+        JsonObject ret = get("/featured-playlists?limit=" + limit + "&offset=" + (page*limit));
+        // TODO: remove
+        ret.getAsJsonObject("playlists").addProperty("offset", page*limit);
+        return ret;
     }
 
-    public JsonObject getCategories() {
-        if (cached_categories == null) {
-            JsonObject res = get("/categories");
-            if (res != null && res.get("error") != null) {
-                cached_categories = res;
-            }
-            else return res;
-        }
-        return cached_categories;
+    public JsonObject getCategories(int page, int limit) {
+        JsonObject ret = get("/categories?limit=" + limit + "&offset=" + (page*limit));
+        // TODO: remove
+       // System.out.println(ret.getAsJsonObject("categories").get("offset").getAsInt());
+        ret.getAsJsonObject("categories").addProperty("offset", page*limit);
+        //System.out.println(ret.getAsJsonObject("categories").get("offset").getAsInt());
+        return ret;
     }
 
-    public JsonObject getPlaylistsFromCategory(String c_name) {
-        JsonObject res = cached_categories;
-        if (res == null) {
-            res = getCategories();
-            if (res == null || res.get("error") != null) return res;
-        }
-        System.out.println(res);
+    public JsonObject getPlaylistsFromCategory(String c_name, int page, int limit) {
+        JsonObject res = get("/categories");
+        if (res.get("error") != null) return res;
         for (JsonElement o : res.getAsJsonObject("categories").getAsJsonArray("items")) {
+
             if (c_name.trim().equalsIgnoreCase(o.getAsJsonObject().get("name").getAsString())) {
-                return get("/categories/" + o.getAsJsonObject().get("id").getAsString() + "/playlists");
+                JsonObject ret = get("/categories/" + o.getAsJsonObject().get("id").getAsString() + "/playlists?limit=" + limit + "&offset=" + (page*limit));
+                // TODO: remove
+                System.out.println(ret);
+                ret.getAsJsonObject("playlists").addProperty("offset", page*limit);
+                ret.addProperty("id", o.getAsJsonObject().get("id").getAsString());
+                return ret;
             }
         }
 
-        return JsonParser.parseString("{\"error\":\"Unknown category name.\"}").getAsJsonObject();
+        return JsonParser.parseString("{\"error\": {\"message\": \"Unknown category name.\"}}").getAsJsonObject();
+    }
+
+    public JsonObject getPlaylistFromId(String id, int page, int limit) {
+        JsonObject ret = get("/categories/" + id + "/playlists?limit=" + limit + "&offset=" + (page*limit));
+        // TODO: remove
+        System.out.println(ret);
+        ret.addProperty("id", id);
+        ret.getAsJsonObject("playlists").addProperty("offset", page*limit);
+        return ret;
     }
 
     private void getAccessCode() {
@@ -172,12 +185,13 @@ public class ConnectionService {
         }
     }
 
-    public void get_authorization() {
+    public boolean get_authorization() {
         getAccessCode();
         System.out.println("code received");
         HttpResponse<String> response = getTokens();
-        if (response != null) access_tokens = JsonParser.parseString(response.body()).getAsJsonObject();
-        //System.out.println("response:");
-        //System.out.println(response != null ? response.body() : "");
+        if (response != null) {
+            access_tokens = JsonParser.parseString(response.body()).getAsJsonObject();
+        } else return false;
+        return true;
     }
 }
