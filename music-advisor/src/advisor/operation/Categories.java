@@ -13,6 +13,7 @@ public class Categories extends Operation implements Pageable {
     public String format(JsonObject obj) {
         if (obj.get("error") != null) return obj.getAsJsonObject("error").get("message").getAsString();
         StringBuilder sb = new StringBuilder();
+        // Go through data and grab the names of the categories
         for (JsonElement e : obj.getAsJsonArray("data")) {
             sb.append(e.getAsJsonObject().get("name").getAsString()).append("\n");
         }

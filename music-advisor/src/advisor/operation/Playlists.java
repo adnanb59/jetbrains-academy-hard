@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 
 public class Playlists extends Operation implements Pageable {
     private String playlist, playlist_id;
-    private JsonObject empty_message = JsonParser
+    private final JsonObject empty_message = JsonParser
             .parseString("{\"error\":{\"message\":\"No category specified.\"}}").getAsJsonObject();
 
     public Playlists(API api) {
@@ -36,8 +36,8 @@ public class Playlists extends Operation implements Pageable {
     public JsonObject execute() {
         if (playlist == null) return empty_message;
         JsonObject result = api.getCategoryPlaylists(playlist, (page=0), false);
-        System.out.println(result);
         if (result.get("error") == null) {
+            // Get playlist id from result, so you don't need to search through categories again for id
             pages = result.get("pages").getAsInt();
             playlist_id = result.get("id").getAsString();
         } else {

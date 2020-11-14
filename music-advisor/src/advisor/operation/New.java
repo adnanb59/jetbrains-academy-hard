@@ -14,10 +14,12 @@ public class New extends Operation implements Pageable {
     public String format(JsonObject obj) {
         if (obj.get("error") != null) return obj.getAsJsonObject("error").get("message").getAsString();
         StringBuilder sb = new StringBuilder();
+        // Go through new releases and collect title, artists & Spotify link
         for (JsonElement e : obj.getAsJsonArray("data")) {
             JsonObject elem = e.getAsJsonObject();
             sb.append(elem.get("name").getAsString()).append("\n");
             sb.append("[");
+            // traverse artists sub-array for artist names
             JsonArray artists = elem.getAsJsonArray("artists");
             for (int i = 0; i < artists.size(); i++) {
                 sb.append(artists.get(i).getAsJsonObject().get("name").getAsString());
@@ -32,8 +34,7 @@ public class New extends Operation implements Pageable {
 
     @Override
     public JsonObject execute() {
-        page = 0;
-        JsonObject res = api.getNewReleases(0);
+        JsonObject res = api.getNewReleases((page=0));
         if (res.get("error") == null) {
             pages = res.get("pages").getAsInt();
         }
