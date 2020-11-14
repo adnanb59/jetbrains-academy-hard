@@ -100,7 +100,7 @@ public class Runner {
 
         // Load properties to program (Spotify app info)
         Properties p = new Properties();
-        try (InputStream is = new FileInputStream("../../util/music_advisor.properties")) {
+        try (InputStream is = new FileInputStream("../resources/music_advisor.properties")) {
             p.load(is);
             if (p.getProperty("client_id") == null || p.getProperty("client_secret") == null) {
                 throw new IOException();
