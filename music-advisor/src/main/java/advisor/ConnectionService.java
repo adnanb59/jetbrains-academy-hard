@@ -39,7 +39,7 @@ public class ConnectionService {
         props = p;
         access_code = null;
         access_tokens = null;
-        server_port = (new Random()).nextInt(6000) + 4000; // get random port for auth server
+        server_port = 8080;
         cli = HttpClient.newBuilder().build();
         create_authorize_server();
     }
