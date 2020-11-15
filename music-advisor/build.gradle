@@ -3,7 +3,7 @@
  *
  * This generated file contains a sample Java project to get you started.
  * For more details take a look at the Java Quickstart chapter in the Gradle
- * User Manual available at https://docs.gradle.org/6.3/userguide/tutorial_java_projects.html
+ * User Manual available at https://docs.gradle.org/current/samples/sample_building_java_applications.html
  */
 
 plugins {
