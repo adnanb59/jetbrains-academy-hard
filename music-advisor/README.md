@@ -22,7 +22,7 @@ Of course, you don't have to use this file, you can store the credentials anywhe
 Whichever file you use to store the credentials, it's important to have at least the `client_id` and `client_secret` properties (you can have as many other properties stored too, but those are required).
 
 This program uses OAuth to get the selected data from Spotify. The user authorizes the program to allow access to their information. [Here's](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) some information on OAuth to help familiarize yourself with the framework.
-The specific flow used for this application is the _Authorization Code Flow_, [here's] some info from Spotify's Developer pages about the steps.
+The specific flow used for this application is the _Authorization Code Flow_, [here's](https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow) some info from Spotify's Developer pages about the steps.
 
 #### Running program
 
