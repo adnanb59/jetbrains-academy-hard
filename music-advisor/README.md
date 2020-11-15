@@ -29,27 +29,35 @@ The specific flow used for this application is the _Authorization Code Flow_, [h
 Since this project is built with Gradle, it is different from the other projects in how they are compiled.
 Rather than using the command line to compile and run the Java program explicitly, we build and run it with the build tool.
 
-Using the Gradle Wrapper (which is already available in this directory), you can build the program with `./gradlew build` and run it with `./gradlew run`. (If using a Windows system, you would use `gradlew.bat` rather than the `gradlew` shell script.
+Using the Gradle Wrapper (which is already available in this directory), you can build the program with `./gradlew build`. (If using a Windows system, you would use `gradlew.bat` rather than the `gradlew` shell script.
 
-There are 3 arguments: access url, resource url, limit
-TODO: ADD USAGE, EXPLAIN THEM
+To run the program, use `./gradlew run --args='[--access <url>] [--resource <url>] [--limit <#>]'`
+Where the 3 arguments are as followed:
+- access - URL to Spotify auth server (to authorize application) (defaults to `https://accounts.spotify.com`)
+- resource - URL to Spotify resource server (to access user data) (defaults to `https://api.spotify.com`)
+- limit - Number of results to load per page (defaults to `5`)
 
-Using the `run` command solely, will use the default args for the Spotify
+If arguments are not passed (and the urls really don't need to be changed), then the defaults will be used.
 
-The operations are: 
-- `featured`
-- `new`
-- `categories`
-- `playlists C_NAME`
-- `exit`
+The operations are:
+- `auth` - authorize application to access data
+- `featured` - get featured playlists
+- `new` - get new releases
+- `categories` - get list of categories
+- `playlists C_NAME` - get playlists belonging to the category `C_NAME`
+- `exit` - end application
 
-As well as:
-- `prev`
-- `next`
+All the non-exit operations cannot be done without the user giving authorization, so if you attempt to run those commands you will be met with the error message: `Please provide access to this application`. So the first command that should be done is `auth`. 
+
+When running auth, you will be prompted to follow a link, go to that link in your browser. Once authorization is successfully given (the application receives the access code), the application will attempt to get the access tokens required when making requests to Spoify for data. If successful, the application can then run the other commands (this was an over-simplified explanation of the _Auth Code Flow_ mentioned above.
+
+For each command, data is paginated (meaning it's not all provided at once). Therefore to access the next set of data (or get previously viewed data), these commands will also be available:
+- `prev` - Get previous page of data
+- `next` - Get next page of data
 
 #### Extra comments
-- There's a couple of inefficiencies and decisions made, that may not be the most sensible, I was trying to make sure things work with the Hyperskill tests.
-There's still improvements that can be done, i.e. using Threads and aSync to wait for the access code rather than busy-waiting.
+- There's a couple of decisions made that may not be the most sensible, I was trying to make sure things work with the Hyperskill tests.
+There's still improvements that can be done, i.e. using Threads and async to wait for the access code rather than busy-waiting.
 
 - [Here's](https://developer.spotify.com/documentation/web-api/) a link to the Spotify Web API, for reference to more API endpoints and information available. The functions of this program revolved around [these](https://developer.spotify.com/documentation/web-api/reference/browse/) endpoints, in case you wanted to see only the calls used in the program.
 
