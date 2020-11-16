@@ -10,6 +10,7 @@ This [link](https://developer.spotify.com/documentation/general/guides/app-setti
 Additionally, you need to whitelist the URL that will be redirected to after authorization (where the access code will be passed). This program creates a simple server to read the access code and save it (while program is running) on port 8080. So, the URL to whitelist is `http://localhost:8080`.
 
 > If you want to use another port, you can change it [here](src/main/java/advisor/ConnectionService.java#L42).
+
 > You can also use your own server or domain and redirect it there, but this program isn't set up for that so you'd have to change things.
 
 After creating the application, you have access to the client id and secret, both pieces of information that will be important in making requests to Spotify later.
