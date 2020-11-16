@@ -1,27 +1,30 @@
 ## music-advisor
 
-This project is a tool to allow users connect to their Spotify and view playlists and albums.
+This project provides a CLI to allow users to view playlists, categories and new releases from their Spotify. The user authorizes the application to get access to certain data (OAuth process is used for auth).
 
 With this project, you need a Spotify Developers account (or if you have a Spotify account, you can authorize with that).
-This is to register the application with Spotify in order for the program to work (more later).
-
-You need to register your application with Spotify so a user can later authorize the application to access music information. 
-[This](https://developer.spotify.com/documentation/general/guides/app-settings/) provides information to create an application with Spotify.
+You need to register your application with Spotify so a user can authorize the application to access their music information. 
+This [link](https://developer.spotify.com/documentation/general/guides/app-settings/) provides information to create an application with Spotify.
 > In step 1, it says to click `CREATE A CLIENT ID`, it should actually be `CREATE AN APP`
 
+Additionally, you need to whitelist the URL that will be redirected to after authorization (where the access code will be passed). This program creates a simple server to read the access code and save it (while program is running) on port 8080. So, the URL to whitelist is `http://localhost:8080`.
+
+> If you want to use another port, you can change it [here](src/main/java/advisor/ConnectionService.java#L42).
+> You can also use your own server or domain and redirect it there, but this program isn't set up for that so you'd have to change things.
+
 After creating the application, you have access to the client id and secret, both pieces of information that will be important in making requests to Spotify later.
-The way to do this in the program is to write them in the [music_advisor.properties](music-advisor/src/main/resources/music_advisor.properties) as key-value pairs.
+The way to do this in the program is to write them in the [music_advisor.properties](src/main/resources/music_advisor.properties) as key-value pairs.
 It would look like this:
 ```
 client_id=...
 client_secret=...
 ```
 
-Of course, you don't have to use this file, you can store the credentials anywhere (in a valid .properties file), you just have to update the program to read from that location (currently pointed at .properties file). You can change the file to read [here](music-advisor/src/main/java/Runner.java#L103).
+Of course, you don't have to use this file, you can store the credentials anywhere (in a valid .properties file), you just have to update the program to read from that location (currently pointed at .properties file). You can change the file to read [here](src/main/java/Runner.java#L103).
 
 Whichever file you use to store the credentials, it's important to have at least the `client_id` and `client_secret` properties (you can have as many other properties stored too, but those are required).
 
-This program uses OAuth to get the selected data from Spotify. The user authorizes the program to allow access to their information. [Here's](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) some information on OAuth to help familiarize yourself with the framework.
+As mentioned before, OAuth is used for authorization. [Here's](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) some information on OAuth to help familiarize yourself with the framework.
 The specific flow used for this application is the _Authorization Code Flow_, [here's](https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow) some info from Spotify's Developer pages about the steps.
 
 #### Running program
